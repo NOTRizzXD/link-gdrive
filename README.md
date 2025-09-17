@@ -31,10 +31,23 @@ npm run dev
 3. Buka browser dan akses website
 4. Masukkan password untuk mengakses konten
 
+## Cara upload di hosting pagesnya
+
+1. jalankan 
+```bash
+npm run built
+```
+2. jalankan 
+```bash
+npm run deploy
+```
+
+
 ## Struktur Project
 
-- `src/App.jsx` - Komponen utama aplikasi
-- `src/components/PasswordProtection.jsx` - Komponen password protection
+- `src/App.jsx` - Komponen utama aplikasi (sudah ditambahkan komentar dalam bahasa Indonesia)
+- `src/main.jsx` - Titik masuk aplikasi React (sudah ditambahkan komentar dalam bahasa Indonesia)
+- `src/components/PasswordProtection.jsx` - Komponen password protection (sudah ditambahkan komentar dalam bahasa Indonesia)
 - `src/components/PasswordProtection.css` - Styling untuk password protection
 - `src/App.css` - Styling utama aplikasi
 
