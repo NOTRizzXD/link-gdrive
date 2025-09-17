@@ -1,149 +1,149 @@
+// Import hook useState dari React untuk mengelola state komponen
 import { useState } from 'react'
+// Import gambar logo dari folder assets
 import logoImage from './assets/LOGO.png'
+// Import file CSS untuk styling komponen App
 import './App.css'
+// Import komponen PasswordProtection untuk proteksi akses
 import PasswordProtection from './components/PasswordProtection'
 
+// Data awal untuk blok-blok konten yang akan ditampilkan dalam aplikasi
+// Setiap blok berisi informasi tentang kategori dokumen atau layanan
 const initialBlocks = [
-  { 
-    id: '001', 
-    title: 'PERATURAN', 
-    color: '#4285f4', 
-    icon: '📋',
-    description: 'Peraturan International dan Nasional terkait keselamatan kapal dan pelayaran',
-    link: 'https://drive.google.com/drive/folders/1B05dw3_--0eyAa6NHOrsC2g8QwFjL9Fe?usp=sharing'
+  {
+    id: '1', // ID unik untuk blok pertama
+    title: 'PERATURAN', // Judul kategori
+    color: '#4285f4', // Warna tema untuk blok
+    icon: '📋', // Emoji ikon untuk visualisasi
+    description: 'Peraturan International dan Nasional terkait keselamatan kapal dan pelayaran', // Deskripsi singkat
+    link: 'https://drive.google.com/drive/folders/1B05dw3_--0eyAa6NHOrsC2g8QwFjL9Fe?usp=sharing' // Link Google Drive
   },
-  { 
-    id: '002', 
-    title: 'UJI PETIK KELAIKLAUTAN KAPAL', 
-    color: '#34a853', 
-    icon: '⚓',
-    description: 'Dokumen dan data terkait uji petik kelaiklautan kapal',
-    link: 'https://drive.google.com/drive/folders/1aW4LzR3XZGOo8l1rr3I3VDejE2dZD79_?usp=sharing'
+  {
+    id: '2', // ID unik untuk blok kedua
+    title: 'UJI PETIK KELAIKLAUTAN KAPAL', // Judul kategori uji petik
+    color: '#34a853', // Warna hijau untuk tema
+    icon: '⚓', // Ikon jangkar
+    description: 'Dokumen dan data terkait uji petik kelaiklautan kapal', // Deskripsi dokumen uji petik
+    link: 'https://drive.google.com/drive/folders/1aW4LzR3XZGOo8l1rr3I3VDejE2dZD79_?usp=sharing' // Link folder Google Drive
   },
-  { 
-    id: '003', 
-    title: 'DATA PEGAWAI', 
-    color: '#ea4335', 
-    icon: '👥',
-    description: 'Data dan informasi pegawai Seksi Keselamatan Kapal',
-    link: 'https://drive.google.com/drive/folders/1Igfwptg66zCNtsyJeRs4pQtei7gq7SWy?usp=sharing'
+  {
+    id: '3', // ID unik untuk blok ketiga
+    title: 'DATA PEGAWAI', // Judul kategori data pegawai
+    color: '#ea4335', // Warna merah untuk tema
+    icon: '👥', // Ikon orang banyak
+    description: 'Data dan informasi pegawai Seksi Keselamatan Kapal', // Deskripsi data pegawai
+    link: 'https://drive.google.com/drive/folders/1Igfwptg66zCNtsyJeRs4pQtei7gq7SWy?usp=sharing' // Link folder data pegawai
   },
-  { 
-    id: '004', 
-    title: 'FORMULIR', 
-    color: '#fbbc04', 
-    icon: '📝',
-    description: 'Formulir online untuk pengajuan dan pelaporan',
-    link: 'https://docs.google.com/forms/d/e/1FAIpQLSdYMQMK_7JHgdCUUuYZdDG8_sbXMptNvivDMaU0_Gh4_BV9Jw/viewform?usp=sharing&ouid=112593036533840644768'
+  {
+    id: 't4', // ID unik untuk blok keempat
+    title: 'FORMULIR', // Judul kategori formulir
+    color: '#fbbc04', // Warna kuning untuk tema
+    icon: '📝', // Ikon formulir
+    description: 'Formulir online untuk pengajuan dan pelaporan', // Deskripsi formulir online
+    link: 'https://docs.google.com/forms/d/e/1FAIpQLSdYMQMK_7JHgdCUUuYZdDG8_sbXMptNvivDMaU0_Gh4_BV9Jw/viewform?usp=sharing&ouid=112593036533840644768' // Link Google Forms
   },
 ]
 
-const iconOptions = [
-  '📋', '⚓', '👥', '📝', '🚢', '🛡️', '🎓', '🔍', '📊', '📁', '📄', '🔗', 
-  '📞', '📧', '🌐', '⚙️', '🔧', '📈', '📉', '✅', '❌', '⚠️', 'ℹ️', '💡'
-]
 
-const colorOptions = [
-  '#4285f4', '#34a853', '#ea4335', '#fbbc04', '#9c27b0', '#ff5722', 
-  '#2196f3', '#4caf50', '#ff9800', '#795548', '#607d8b', '#e91e63'
-]
-
+// Komponen utama App yang menampilkan website penghubung link Google Drive
 function App() {
+  // State untuk menentukan apakah user sudah terautentikasi (sudah memasukkan password yang benar)
   const [isAuthenticated, setIsAuthenticated] = useState(false)
+  // State untuk mengontrol mode tampilan: 'grid' atau 'list'
   const [viewMode, setViewMode] = useState('grid')
-  const [blocks, setBlocks] = useState(initialBlocks)
-  const [showAddForm, setShowAddForm] = useState(false)
-  const [newCard, setNewCard] = useState({
-    title: '',
-    description: '',
-    link: '',
-    icon: '📋',
-    color: '#4285f4'
-  })
+  // State untuk menyimpan array blok-blok konten (saat ini menggunakan data statis)
+  // eslint-disable-next-line no-unused-vars
+  const [blocks, setBlocks] = useState(initialBlocks) // setBlocks belum digunakan karena data bersifat statis
 
+  // Fungsi yang dipanggil ketika password yang dimasukkan benar
   const handlePasswordCorrect = () => {
-    setIsAuthenticated(true)
+    setIsAuthenticated(true) // Mengubah state autentikasi menjadi true
   }
 
-  const addNewCard = () => {
-    if (newCard.title && newCard.description && newCard.link) {
-      const newId = String(blocks.length + 1).padStart(3, '0')
-      const cardToAdd = {
-        id: newId,
-        ...newCard
-      }
-      setBlocks([...blocks, cardToAdd])
-      setNewCard({
-        title: '',
-        description: '',
-        link: '',
-        icon: '📋',
-        color: '#4285f4'
-      })
-      setShowAddForm(false)
-    }
-  }
-
-  // Show password protection if not authenticated
+  // Menampilkan komponen password protection jika user belum terautentikasi
   if (!isAuthenticated) {
     return <PasswordProtection onPasswordCorrect={handlePasswordCorrect} />
   }
 
+  // Mengembalikan JSX untuk merender komponen utama aplikasi
   return (
+    // Container utama aplikasi dengan wrapper
     <div className="app-wrapper">
+      {/* Header aplikasi dengan informasi instansi */}
       <header className="header">
+        {/* Bagian atas header dengan logo dan nama instansi */}
         <div className="header-top">
+          {/* Gambar logo Kesyahbandaran */}
           <img src={logoImage} alt="Logo Kesyahbandaran" className="logo" />
+          {/* Garis pemisah vertikal */}
           <div className="vertical-divider"></div>
+          {/* Nama lengkap kantor */}
           <span className="small-title">KANTOR KESYAHBANDARAN DAN OTORITAS PELABUHAN UTAMA MAKASSAR</span>
         </div>
+        {/* Garis pemisah horizontal */}
         <div className="header-divider"></div>
-        <h1 className="main-title">Seksi Keselamatan Kapal dan Pecengah Kapal</h1>
+        {/* Judul utama seksi */}
+        <h1 className="main-title">Seksi Keselamatan Kapal dan Pecegah Kapal</h1>
       </header>
       
+      {/* Kontrol untuk mengubah mode tampilan antara grid dan list */}
       <div className="view-controls">
-        <button 
-          className={`view-btn ${viewMode === 'grid' ? 'active' : ''}`}
-          onClick={() => setViewMode('grid')}
+        {/* Tombol untuk mode tampilan grid */}
+        <button
+          className={`view-btn ${viewMode === 'grid' ? 'active' : ''}`} // Menambahkan class 'active' jika mode grid aktif
+          onClick={() => setViewMode('grid')} // Mengubah viewMode menjadi 'grid' saat diklik
         >
+          {/* SVG ikon grid */}
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
             <path d="M3 3h7v7H3V3zm0 11h7v7H3v-7zm11-11h7v7h-7V3zm0 11h7v7h-7v-7z"/>
           </svg>
-          Grid
+          Grid {/* Label tombol */}
         </button>
-        <button 
-          className={`view-btn ${viewMode === 'list' ? 'active' : ''}`}
-          onClick={() => setViewMode('list')}
+        {/* Tombol untuk mode tampilan list */}
+        <button
+          className={`view-btn ${viewMode === 'list' ? 'active' : ''}`} // Menambahkan class 'active' jika mode list aktif
+          onClick={() => setViewMode('list')} // Mengubah viewMode menjadi 'list' saat diklik
         >
+          {/* SVG ikon list */}
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
             <path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/>
           </svg>
-          List
+          List {/* Label tombol */}
         </button>
       </div>
       
+      {/* Container utama untuk konten blok-blok dengan class dinamis berdasarkan viewMode */}
       <main className={`content-container ${viewMode}-view`}>
+        {/* Mapping array blocks untuk merender setiap blok konten */}
         {blocks.map((block, index) => (
+          // Link anchor yang membuka Google Drive di tab baru
           <a
-            key={block.id}
-            href={block.link}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={`content-block ${viewMode}-block`}
-            style={{ 
-              '--block-color': block.color,
-              animationDelay: `${index * 0.1}s`
+            key={block.id} // Key unik untuk setiap elemen dalam list React
+            href={block.link} // URL tujuan (Google Drive folder atau Google Forms)
+            target="_blank" // Membuka di tab baru
+            rel="noopener noreferrer" // Keamanan untuk link eksternal
+            className={`content-block ${viewMode}-block`} // Class CSS dengan mode tampilan
+            style={{
+              '--block-color': block.color, // CSS custom property untuk warna tema
+              animationDelay: `${index * 0.1}s` // Delay animasi untuk efek bertahap
             }}
           >
+            {/* ID blok yang ditampilkan di pojok */}
             <div className="block-id">{block.id}</div>
+            {/* Konten utama blok */}
             <div className="block-content">
+              {/* Judul kategori blok */}
               <div className="block-title">{block.title}</div>
+              {/* Deskripsi singkat tentang isi blok */}
               <div className="block-description">{block.description}</div>
+              {/* Logo kecil di dalam blok */}
               <div className="block-logo">
                 <img src={logoImage} alt="Logo" className="card-logo" />
               </div>
             </div>
+            {/* Ikon emoji untuk visualisasi kategori */}
             <div className="block-icon">{block.icon}</div>
+            {/* Overlay dengan petunjuk klik */}
             <div className="block-overlay">
               <span className="click-hint">Klik untuk membuka</span>
             </div>
@@ -151,112 +151,6 @@ function App() {
         ))}
       </main>
       
-      <div className="bottom-controls">
-        <button 
-          className="add-card-btn"
-          onClick={() => setShowAddForm(!showAddForm)}
-        >
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
-          </svg>
-          {showAddForm ? 'Tutup Form' : 'Tambah Card Baru'}
-        </button>
-      </div>
-      
-      {showAddForm && (
-        <div className="add-card-form">
-          <div className="form-header">
-            <h3>Tambah Card Baru</h3>
-            <button 
-              className="close-btn"
-              onClick={() => setShowAddForm(false)}
-            >
-              ✕
-            </button>
-          </div>
-          
-          <div className="form-content">
-            <div className="form-group">
-              <label>Judul Card:</label>
-              <input
-                type="text"
-                value={newCard.title}
-                onChange={(e) => setNewCard({...newCard, title: e.target.value})}
-                placeholder="Masukkan judul card..."
-              />
-            </div>
-            
-            <div className="form-group">
-              <label>Keterangan:</label>
-              <textarea
-                value={newCard.description}
-                onChange={(e) => setNewCard({...newCard, description: e.target.value})}
-                placeholder="Masukkan keterangan card..."
-                rows="3"
-              />
-            </div>
-            
-            <div className="form-group">
-              <label>Link Google Drive:</label>
-              <input
-                type="url"
-                value={newCard.link}
-                onChange={(e) => setNewCard({...newCard, link: e.target.value})}
-                placeholder="https://drive.google.com/..."
-              />
-            </div>
-            
-            <div className="form-row">
-              <div className="form-group">
-                <label>Icon:</label>
-                <div className="icon-selector">
-                  {iconOptions.map((icon, index) => (
-                    <button
-                      key={index}
-                      type="button"
-                      className={`icon-option ${newCard.icon === icon ? 'selected' : ''}`}
-                      onClick={() => setNewCard({...newCard, icon})}
-                    >
-                      {icon}
-                    </button>
-                  ))}
-                </div>
-              </div>
-              
-              <div className="form-group">
-                <label>Warna:</label>
-                <div className="color-selector">
-                  {colorOptions.map((color, index) => (
-                    <button
-                      key={index}
-                      type="button"
-                      className={`color-option ${newCard.color === color ? 'selected' : ''}`}
-                      style={{ backgroundColor: color }}
-                      onClick={() => setNewCard({...newCard, color})}
-                    />
-                  ))}
-                </div>
-              </div>
-            </div>
-            
-            <div className="form-actions">
-              <button 
-                className="cancel-btn"
-                onClick={() => setShowAddForm(false)}
-              >
-                Batal
-              </button>
-              <button 
-                className="submit-btn"
-                onClick={addNewCard}
-                disabled={!newCard.title || !newCard.description || !newCard.link}
-              >
-                Tambah Card
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   )
 }
